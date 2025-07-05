@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f981c30535f554b88e0d7909f3c4d7, type: 3}
-  m_Name: ItemSO - Sword
+  m_Script: {fileID: 11500000, guid: 15fa2dd78b516904c85759da96117613, type: 3}
+  m_Name: InventorySO - Player
   m_EditorClassIdentifier: 
-  _displayName: Sword
-  _description: A long blade with a sharp edge.
-  _icon: {fileID: 0}
-  _value: 10

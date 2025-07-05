@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f981c30535f554b88e0d7909f3c4d7, type: 3}
   m_Name: ItemSO - Apple
   m_EditorClassIdentifier: 
-  _displayName: Banana
-  _description: A yellow fruit.
+  _displayName: Apple
+  _description: A tasty fruit.
   _icon: {fileID: 0}
   _value: 1
