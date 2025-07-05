@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryInstance
 {
-    private Dictionary<ItemSO, int> _items = new Dictionary<ItemSO, int>();
+    private Dictionary<ItemSO, int> _items = new();
 
     public event System.Action InventoryUpdated;
 
@@ -40,5 +41,10 @@ public class InventoryInstance
             }
             InventoryUpdated?.Invoke();
         }
+    }
+
+    public int GetQuantity(ItemSO item)
+    {
+        return _items.GetValueOrDefault(item, 0);
     }
 }

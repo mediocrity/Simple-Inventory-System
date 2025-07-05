@@ -16,3 +16,4 @@ MonoBehaviour:
   _description: Useful when trading.
   _icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   _value: 1
+  _isTradable: 0
