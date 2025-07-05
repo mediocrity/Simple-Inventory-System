@@ -3,7 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InventorySO", menuName = "ScriptableObjects/InventorySO")]
 public class InventorySO : ScriptableObject
 {
-    [SerializeField] private ItemSO[] _items;
+    [SerializeField] private ItemDefeinition[] _initialItems;
 
-    public ItemSO[] Items => _items;
+    public ItemDefeinition[] InitialItems => _initialItems;
+
+    [System.Serializable]
+    public class ItemDefeinition
+    {
+        public ItemSO Item;
+        public int Quantity;
+    }
 }

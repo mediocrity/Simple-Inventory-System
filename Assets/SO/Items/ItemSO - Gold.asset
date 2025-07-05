@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18f981c30535f554b88e0d7909f3c4d7, type: 3}
-  m_Name: ItemSO - Shield
+  m_Name: ItemSO - Gold
   m_EditorClassIdentifier: 
-  _displayName: Shield
-  _description: Used for blocking attacks.
+  _displayName: Gold
+  _description: Useful when trading.
   _icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  _value: 100
+  _value: 1

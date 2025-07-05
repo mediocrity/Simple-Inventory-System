@@ -20,10 +20,10 @@ public class InventoryUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (var item in _inventory.Items)
+        foreach (var item in _inventory.ItemToQuantity)
         {
             var itemUI = Instantiate(_itemUIPrefab, _itemContainer);
-            itemUI.Initialize(item);
+            itemUI.Initialize(item.Key, item.Value);
         }
     }
 }

@@ -1,33 +1,43 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class InventoryInstance
 {
-    private List<ItemSO> _items = new List<ItemSO>();
+    private Dictionary<ItemSO, int> _items = new Dictionary<ItemSO, int>();
 
     public event System.Action InventoryUpdated;
 
-    public IReadOnlyList<ItemSO> Items => _items.AsReadOnly();
+    public IReadOnlyDictionary<ItemSO, int> ItemToQuantity => _items;
 
     public InventoryInstance(InventorySO inventorySO)
     {
-        foreach (var item in inventorySO.Items)
+        foreach (var item in inventorySO.InitialItems)
         {
-            _items.Add(item);
+            AddItem(item.Item, item.Quantity);
         }
     }
 
-    public void AddItem(ItemSO item)
+    public void AddItem(ItemSO item, int quantity)
     {
-        _items.Add(item);
+        if (_items.ContainsKey(item))
+        {
+            _items[item] += quantity;
+        }
+        else
+        {
+            _items.Add(item, quantity);
+        }
         InventoryUpdated?.Invoke();
     }
 
-    public void RemoveItem(ItemSO item)
+    public void RemoveItem(ItemSO item, int quantity)
     {
-        if (_items.Contains(item))
+        if (_items.ContainsKey(item))
         {
-            _items.Remove(item);
+            _items[item] -= quantity;
+            if (_items[item] <= 0)
+            {
+                _items.Remove(item);
+            }
             InventoryUpdated?.Invoke();
         }
     }
