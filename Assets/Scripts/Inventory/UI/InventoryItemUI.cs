@@ -11,13 +11,11 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField] private Button _buyButton;
 
     private ItemSO _itemSO;
-    private int _quantityValue;
     private InventoryUI _inventoryUI;
 
     public void Initialize(InventoryUI inventoryUI, ItemSO so, int quantity)
     {
         _itemSO = so;
-        _quantityValue = quantity;
 
         _inventoryUI = inventoryUI;
         _icon.sprite = so.Icon;
@@ -33,6 +31,6 @@ public class InventoryItemUI : MonoBehaviour
 
     public void PressedBuyButton()
     {
-        _inventoryUI.AttemptToSellItem(_itemSO, _quantityValue);
+        _inventoryUI.AttemptToSellItem(_itemSO, 1);
     }
 }
