@@ -8,7 +8,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Transform _itemContainer;
 
     private IObservableInventory _inventory;
-    private IInventoryTrader _trader;
+    private IInventoryTransactionHandler _transactionHandler;
 
     private Dictionary<ItemSO, InventoryItemUI> _itemUIMap = new Dictionary<ItemSO, InventoryItemUI>();
     private bool _requiresUpdate;
@@ -21,10 +21,10 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void Initialize(IObservableInventory inventory, IInventoryTrader trader = null)
+    public void Initialize(IObservableInventory inventory, IInventoryTransactionHandler transactionHandler = null)
     {
         _inventory = inventory;
-        _trader = trader;
+        _transactionHandler = transactionHandler;
         _inventory.InventoryUpdated += TriggerUIUpdate;
         UpdateInventoryUI();
     }
@@ -64,7 +64,7 @@ public class InventoryUI : MonoBehaviour
                 itemUI = Instantiate(_itemUIPrefab, _itemContainer);
                 _itemUIMap[item] = itemUI;
             }
-            itemUI.UpdateUI(_inventory, _trader, item);
+            itemUI.UpdateUI(_inventory, _transactionHandler, item);
         }
     }
 

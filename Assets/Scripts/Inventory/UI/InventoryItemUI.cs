@@ -11,12 +11,12 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField] private Image _valueIcon = null;
     [SerializeField] private TMPro.TMP_Text _value;
     [SerializeField] private TMPro.TMP_Text _quantity;
-    [SerializeField] private Button _tradeButton;
-    [SerializeField] private TMP_Text _tradeButtonText;
+    [SerializeField] private Button _transactionButton;
+    [SerializeField] private TMP_Text _transactionButtonText;
     [SerializeField] private LayoutElement _layoutElement;
 
     private IObservableInventory _inventory;
-    private IInventoryTrader _trader;
+    private IInventoryTransactionHandler _transactionHandler;
     private ItemSO _itemSO;
     private int _previousQuantity;
     private RectTransform _rt;
@@ -33,14 +33,14 @@ public class InventoryItemUI : MonoBehaviour
         transform.transform.localScale = Vector3.zero;
     }
 
-    public void UpdateUI(IObservableInventory inventory, IInventoryTrader trader, ItemSO so)
+    public void UpdateUI(IObservableInventory inventory, IInventoryTransactionHandler transactionHandler, ItemSO so)
     {
         int quantity = inventory.GetQuantity(so);
 
         HandleAnimation(quantity);
 
         _inventory = inventory;
-        _trader = trader;
+        _transactionHandler = transactionHandler;
         _itemSO = so;
         _previousQuantity = quantity;
 
@@ -50,15 +50,15 @@ public class InventoryItemUI : MonoBehaviour
         _description.SetText(so.Description);
         _quantity.SetText($"x{quantity}");
 
-        // Update trading related UI elements
-        bool canTrade = trader != null && so.IsTradable;
+        // Update transaction related UI elements
+        bool canTransact = transactionHandler != null && so.IsTradable;
         _value.SetText($"{so.Value}");
-        _value.gameObject.SetActive(canTrade);
-        _valueIcon.gameObject.SetActive(canTrade);
-        _valueIcon.sprite = canTrade ? _trader.TradeCurrency.Icon : null;
-        _tradeButtonText.SetText(canTrade ? trader.TradeText : "?");
-        _tradeButton.gameObject.SetActive(canTrade);
-        _tradeButton.interactable = canTrade ? _trader.CanSellToTrader(_inventory, _itemSO, 1) : false;
+        _value.gameObject.SetActive(canTransact);
+        _valueIcon.gameObject.SetActive(canTransact);
+        _valueIcon.sprite = canTransact ? _transactionHandler.TransactionCurrency.Icon : null;
+        _transactionButtonText.SetText(canTransact ? transactionHandler.TransactionText : "?");
+        _transactionButton.gameObject.SetActive(canTransact);
+        _transactionButton.interactable = canTransact ? _transactionHandler.CanTransact(_itemSO, 1) : false;
     }
 
     private void HandleAnimation(int quantity)
@@ -132,8 +132,8 @@ public class InventoryItemUI : MonoBehaviour
             .OnComplete(() => _icon.transform.localScale = Vector3.one);
     }
 
-    public void PressedBuyButton()
+    public void PressedTransactionButton()
     {
-        _trader.AttemptToSellToTrader(_inventory, _itemSO, 1);
+        _transactionHandler.AttemptToTransact(_itemSO, 1);
     }
 }

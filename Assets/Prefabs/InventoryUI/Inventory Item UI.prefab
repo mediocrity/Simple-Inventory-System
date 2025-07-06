@@ -270,8 +270,8 @@ MonoBehaviour:
   _valueIcon: {fileID: 6477911820062608751}
   _value: {fileID: 6871875336831719943}
   _quantity: {fileID: 7896753293468811648}
-  _tradeButton: {fileID: 3384900219284744106}
-  _tradeButtonText: {fileID: 3008406169737751960}
+  _transactionButton: {fileID: 3384900219284744106}
+  _transactionButtonText: {fileID: 3008406169737751960}
   _layoutElement: {fileID: 4733742860711361438}
 --- !u!114 &4733742860711361438
 MonoBehaviour:
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 3850585017291945550}
   - component: {fileID: 3384900219284744106}
   m_Layer: 5
-  m_Name: Button - Buy
+  m_Name: Button - Transaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6049597327895938673}
         m_TargetAssemblyTypeName: InventoryItemUI, Assembly-CSharp
-        m_MethodName: PressedBuyButton
+        m_MethodName: PressedTransactionButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
