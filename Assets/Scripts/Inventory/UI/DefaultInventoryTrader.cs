@@ -6,10 +6,10 @@ public class DefaultInventoryTrader : IInventoryTrader
     public ItemSO TradeCurrency { get; private set; }
     public string TradeText { get; private set; }
 
-    public DefaultInventoryTrader(ItemSO tradingCurrency, InventoryInstance buyerInventory, string tradeText)
+    public DefaultInventoryTrader(InventoryInstance traderInventory, ItemSO tradingCurrency, string tradeText)
     {
+        _buyerInventory = traderInventory;
         TradeCurrency = tradingCurrency;
-        _buyerInventory = buyerInventory;
         TradeText = tradeText;
     }
 

@@ -19,8 +19,12 @@ public class InventoryDemo : MonoBehaviour
         var _shopInventoryInstance = new InventoryInstance(_shopInventorySO);
         var _playerInventoryInstance = new InventoryInstance(_playerInventorySO);
 
+        // Create trader instances
+        var playerTrader = new DefaultInventoryTrader(_playerInventoryInstance, _tradingCurrency, "Buy");
+        var shopTrader = new DefaultInventoryTrader(_shopInventoryInstance, _tradingCurrency, "Sell");
+
         // Initialize the inventory UIs
-        _shopInventoryUI.Initialize(_shopInventoryInstance, new DefaultInventoryTrader(_tradingCurrency, _playerInventoryInstance, "Buy"));
-        _playerInventoryUI.Initialize(_playerInventoryInstance, new DefaultInventoryTrader(_tradingCurrency, _shopInventoryInstance, "Sell"));
+        _shopInventoryUI.Initialize(_shopInventoryInstance, playerTrader);
+        _playerInventoryUI.Initialize(_playerInventoryInstance, shopTrader);
     }
 }
