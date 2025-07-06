@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
@@ -58,6 +59,13 @@ public class InventoryUI : MonoBehaviour
                 _itemUIMap[item] = itemUI;
             }
             itemUI.Initialize(_inventory, _trader, item);
+        }
+
+        foreach (var item in _itemUIMap
+            .OrderByDescending(pair => pair.Key.SortPriority)
+            .ThenByDescending(pair => pair.Key.Value))
+        {
+            item.Value.transform.SetAsLastSibling();
         }
     }
 }

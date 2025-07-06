@@ -94,7 +94,6 @@ public class InventoryItemUI : MonoBehaviour
 
     public void AnimateIn()
     {
-        transform.SetAsLastSibling();
         gameObject.SetActive(true);
         _layoutElement.DOKill();
         _layoutElement.minHeight = 0;
