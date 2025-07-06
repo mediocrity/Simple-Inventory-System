@@ -20,11 +20,7 @@ public class InventoryDemo : MonoBehaviour
         var _playerInventoryInstance = new InventoryInstance(_playerInventorySO);
 
         // Initialize the inventory UIs
-        _shopInventoryUI.Initialize(_shopInventoryInstance);
-        _playerInventoryUI.Initialize(_playerInventoryInstance);
-
-        // Enable trading functionality
-        _playerInventoryUI.SetTradingTarget(_tradingCurrency, _shopInventoryInstance);
-        _shopInventoryUI.SetTradingTarget(_tradingCurrency, _playerInventoryInstance);
+        _shopInventoryUI.Initialize(_shopInventoryInstance, new DefaultInventoryTrader(_tradingCurrency, _playerInventoryInstance));
+        _playerInventoryUI.Initialize(_playerInventoryInstance, new DefaultInventoryTrader(_tradingCurrency, _shopInventoryInstance));
     }
 }

@@ -1,66 +1,63 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private InventoryItemUI _itemUIPrefab;
     [SerializeField] private Transform _itemContainer;
+
     private InventoryInstance _inventory;
-    private ItemSO _tradingCurrency;
-    private InventoryInstance _tradingTargetInventory;
-    public bool TradingEnabled { get; private set; }
+    private IInventoryTrader _trader;
 
-    public void Initialize(InventoryInstance inventory)
-    {
-        _inventory = inventory;
-        _inventory.InventoryUpdated += UpdateInventoryUI;
-        UpdateInventoryUI();
-    }
+    private Dictionary<ItemSO, InventoryItemUI> _itemUIMap = new Dictionary<ItemSO, InventoryItemUI>();
+    private bool _requiresUpdate;
 
-    public void UpdateInventoryUI()
+    private void Awake()
     {
         foreach (Transform child in _itemContainer)
         {
             Destroy(child.gameObject);
         }
-
-        foreach (var item in _inventory.ItemToQuantity)
-        {
-            var itemUI = Instantiate(_itemUIPrefab, _itemContainer);
-            itemUI.Initialize(this, item.Key, item.Value);
-        }
     }
 
-    public void SetTradingTarget(ItemSO tradingCurrency, InventoryInstance targetInventory)
+    public void Initialize(InventoryInstance inventory, IInventoryTrader trader = null)
     {
-        _tradingCurrency = tradingCurrency;
-        _tradingTargetInventory = targetInventory;
-        TradingEnabled = true;
+        _inventory = inventory;
+        _trader = trader;
+        _inventory.InventoryUpdated += RequiresUpdate;
         UpdateInventoryUI();
     }
 
-    public void AttemptToSellItem(ItemSO item, int quantity)
+    public void RequiresUpdate()
     {
-        int totalCost = item.Value * quantity;
+        _requiresUpdate = true;
+    }
 
-        bool hasItemAvailable = _inventory.GetQuantity(item) >= quantity;
-        if (!hasItemAvailable)
+    private void Update()
+    {
+        if (_requiresUpdate)
         {
-            Debug.LogWarning($"Not enough {item.DisplayName} in inventory to sell {quantity}.");
-            return;
+            // Only update once per frame
+            _requiresUpdate = false;
+            UpdateInventoryUI();
         }
-        bool canAffordItems = _tradingTargetInventory.GetQuantity(_tradingCurrency) >= totalCost;
-        if (!canAffordItems)
+    }
+
+    public void UpdateInventoryUI()
+    {
+        foreach (var item in _inventory.Items)
         {
-            Debug.LogWarning($"Not enough {_tradingCurrency.DisplayName} to buy {quantity} {item.DisplayName}.");
-            return;
+            InventoryItemUI itemUI;
+            if (_itemUIMap.ContainsKey(item))
+            {
+                itemUI = _itemUIMap[item];
+            }
+            else
+            {
+                itemUI = Instantiate(_itemUIPrefab, _itemContainer);
+                _itemUIMap[item] = itemUI;
+            }
+            itemUI.Initialize(_inventory, _trader, item);
         }
-
-        // Transfer items
-        _inventory.RemoveItem(item, quantity);
-        _tradingTargetInventory.AddItem(item, quantity);
-
-        // Transfer currency
-        _inventory.AddItem(_tradingCurrency, totalCost);
-        _tradingTargetInventory.RemoveItem(_tradingCurrency, totalCost);
     }
 }

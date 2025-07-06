@@ -7,7 +7,7 @@ public class InventoryInstance
 
     public event System.Action InventoryUpdated;
 
-    public IReadOnlyDictionary<ItemSO, int> ItemToQuantity => _items;
+    public IEnumerable<ItemSO> Items => _items.Keys;
 
     public InventoryInstance(InventorySO inventorySO)
     {
@@ -34,11 +34,7 @@ public class InventoryInstance
     {
         if (_items.ContainsKey(item))
         {
-            _items[item] -= quantity;
-            if (_items[item] <= 0)
-            {
-                _items.Remove(item);
-            }
+            _items[item] = Mathf.Max(0, _items[item] - quantity);
             InventoryUpdated?.Invoke();
         }
     }

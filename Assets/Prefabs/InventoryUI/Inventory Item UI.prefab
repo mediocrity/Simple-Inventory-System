@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7208537250336133431}
   - component: {fileID: 6049597327895938673}
+  - component: {fileID: 4733742860711361438}
   m_Layer: 5
   m_Name: Inventory Item UI
   m_TagString: Untagged
@@ -269,6 +270,27 @@ MonoBehaviour:
   _value: {fileID: 6871875336831719943}
   _quantity: {fileID: 7896753293468811648}
   _buyButton: {fileID: 3384900219284744106}
+  _layoutElement: {fileID: 4733742860711361438}
+--- !u!114 &4733742860711361438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424428024673087471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: 400
+  m_MinHeight: 100
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &3505175277965912635
 GameObject:
   m_ObjectHideFlags: 0
