@@ -13,20 +13,31 @@ public class DefaultInventoryTrader : IInventoryTrader
         TradeText = tradeText;
     }
 
-    public void AttemptToSellItem(InventoryInstance sellerInventory, ItemSO item, int quantity)
+    public bool CanSellToTrader(InventoryInstance sellerInventory, ItemSO item, int quantity)
     {
         int totalCost = item.Value * quantity;
 
         bool hasItemAvailable = sellerInventory.GetQuantity(item) >= quantity;
         if (!hasItemAvailable)
         {
-            Debug.LogWarning($"Not enough {item.DisplayName} in inventory to sell {quantity}.");
-            return;
+            return false;
         }
         bool canAffordItems = _buyerInventory.GetQuantity(TradeCurrency) >= totalCost;
         if (!canAffordItems)
         {
-            Debug.LogWarning($"Not enough {TradeCurrency.DisplayName} to buy {quantity} {item.DisplayName}.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void AttemptToSellToTrader(InventoryInstance sellerInventory, ItemSO item, int quantity)
+    {
+        int totalCost = item.Value * quantity;
+
+        if (!CanSellToTrader(sellerInventory, item, quantity))
+        {
+            Debug.LogWarning($"Cannot sell {quantity} of {item.DisplayName}. Not enough items or currency.");
             return;
         }
 

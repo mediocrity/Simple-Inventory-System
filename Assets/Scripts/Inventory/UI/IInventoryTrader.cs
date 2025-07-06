@@ -5,5 +5,7 @@ public interface IInventoryTrader
     string TradeText { get; }
     ItemSO TradeCurrency { get; }
 
-    void AttemptToSellItem(InventoryInstance sellerInventory, ItemSO item, int quantity);
+    public bool CanSellToTrader(InventoryInstance sellerInventory, ItemSO item, int quantity);
+
+    void AttemptToSellToTrader(InventoryInstance sellerInventory, ItemSO item, int quantity);
 }

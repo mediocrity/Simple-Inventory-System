@@ -57,7 +57,7 @@ public class InventoryItemUI : MonoBehaviour
         _tradeButtonText.SetText(canTrade ? trader.TradeText : "?");
         _tradeButton.gameObject.SetActive(canTrade);
 
-        _tradeButton.interactable = canTrade;
+        _tradeButton.interactable = canTrade ? _trader.CanSellToTrader(_inventory, _itemSO, 1) : false;
     }
 
     private void HandleAnimation(int quantity)
@@ -134,6 +134,6 @@ public class InventoryItemUI : MonoBehaviour
 
     public void PressedBuyButton()
     {
-        _trader.AttemptToSellItem(_inventory, _itemSO, 1);
+        _trader.AttemptToSellToTrader(_inventory, _itemSO, 1);
     }
 }
