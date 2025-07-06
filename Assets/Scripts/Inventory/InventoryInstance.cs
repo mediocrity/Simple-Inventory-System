@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryInstance
+public class InventoryInstance: IObservableInventory
 {
     private Dictionary<ItemSO, int> _items = new();
 

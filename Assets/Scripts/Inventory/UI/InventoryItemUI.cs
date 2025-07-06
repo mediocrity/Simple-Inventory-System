@@ -15,7 +15,7 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField] private TMP_Text _tradeButtonText;
     [SerializeField] private LayoutElement _layoutElement;
 
-    private InventoryInstance _inventory;
+    private IObservableInventory _inventory;
     private IInventoryTrader _trader;
     private ItemSO _itemSO;
     private int _previousQuantity;
@@ -33,7 +33,7 @@ public class InventoryItemUI : MonoBehaviour
         transform.transform.localScale = Vector3.zero;
     }
 
-    public void UpdateUI(InventoryInstance inventory, IInventoryTrader trader, ItemSO so)
+    public void UpdateUI(IObservableInventory inventory, IInventoryTrader trader, ItemSO so)
     {
         int quantity = inventory.GetQuantity(so);
 

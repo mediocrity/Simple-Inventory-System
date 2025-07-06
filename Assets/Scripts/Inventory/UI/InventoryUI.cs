@@ -7,7 +7,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private InventoryItemUI _itemUIPrefab;
     [SerializeField] private Transform _itemContainer;
 
-    private InventoryInstance _inventory;
+    private IObservableInventory _inventory;
     private IInventoryTrader _trader;
 
     private Dictionary<ItemSO, InventoryItemUI> _itemUIMap = new Dictionary<ItemSO, InventoryItemUI>();
@@ -21,7 +21,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void Initialize(InventoryInstance inventory, IInventoryTrader trader = null)
+    public void Initialize(IObservableInventory inventory, IInventoryTrader trader = null)
     {
         _inventory = inventory;
         _trader = trader;
