@@ -102,7 +102,7 @@ public class InventoryItemUI : MonoBehaviour
 
         transform.DOKill();
         transform.localScale = new Vector3(1, 0, 1);
-        transform.DOScaleY(1, _animationDuration).SetDelay(_animationTransferDelay).SetEase(Ease.OutBack)
+        transform.DOScaleY(1, _animationDuration).SetDelay(_animationTransferDelay + _animationDuration * 0.1f).SetEase(Ease.OutBack)
             .OnComplete(() => _rt.sizeDelta = _defautlSize);
     }
 
@@ -113,7 +113,7 @@ public class InventoryItemUI : MonoBehaviour
             .OnComplete(() => gameObject.SetActive(false));
 
         transform.DOKill();
-        transform.DOScaleY(0, _animationDuration).SetEase(Ease.InBack)
+        transform.DOScaleY(0, _animationDuration * 0.75f).SetEase(Ease.InBack)
             .OnComplete(() => _rt.sizeDelta = new Vector2(_rt.sizeDelta.x, 0));
     }
 
@@ -121,14 +121,14 @@ public class InventoryItemUI : MonoBehaviour
     {
         _icon.transform.DOKill();
         _icon.transform.localScale = Vector2.one;
-        _icon.transform.DOPunchScale(transform.localScale * 0.1f, _animationDuration, 0, 1).SetDelay(_animationTransferDelay)
+        _icon.transform.DOPunchScale(transform.localScale * 0.1f, _animationDuration * 0.75f, 0, 1).SetDelay(_animationTransferDelay)
         .OnComplete(() => _icon.transform.localScale = Vector3.one);
     }
 
     public void AnimateQuantityDecrease()
     {
         _icon.transform.DOKill();
-        _icon.transform.DOPunchScale(transform.localScale * -0.1f, _animationDuration, 0, 1)
+        _icon.transform.DOPunchScale(transform.localScale * -0.1f, _animationDuration * 0.75f, 0, 1)
             .OnComplete(() => _icon.transform.localScale = Vector3.one);
     }
 
