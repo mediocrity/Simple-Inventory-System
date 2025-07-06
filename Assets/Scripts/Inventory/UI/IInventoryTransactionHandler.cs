@@ -6,4 +6,7 @@ public interface IInventoryTransactionHandler
     public bool CanTransact(ItemSO item, int quantity);
 
     void AttemptToTransact(ItemSO item, int quantity);
+
+    int GetValue(ItemSO item, int quantity);
+    int GetValue(ItemSO so, object tranactionQuantity);
 }

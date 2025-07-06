@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryInstance: IObservableInventory
+public class InventoryInstance : IObservableInventory
 {
     private Dictionary<ItemSO, int> _items = new();
 
@@ -9,8 +9,11 @@ public class InventoryInstance: IObservableInventory
 
     public IEnumerable<ItemSO> Items => _items.Keys;
 
+    public InventorySO InventorySO { get; }
+
     public InventoryInstance(InventorySO inventorySO)
     {
+        InventorySO = inventorySO;
         foreach (var item in inventorySO.InitialItems)
         {
             AddItem(item.Item, item.Quantity);

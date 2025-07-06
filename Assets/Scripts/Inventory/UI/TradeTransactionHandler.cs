@@ -17,7 +17,7 @@ public class TradeTransactionHandler : IInventoryTransactionHandler
 
     public bool CanTransact(ItemSO item, int quantity)
     {
-        int totalCost = item.Value * quantity;
+        int totalCost = GetValue(item, quantity);
 
         bool hasItemAvailable = _sellerInventory.GetQuantity(item) >= quantity;
         if (!hasItemAvailable)
@@ -35,7 +35,7 @@ public class TradeTransactionHandler : IInventoryTransactionHandler
 
     public void AttemptToTransact(ItemSO item, int quantity)
     {
-        int totalCost = item.Value * quantity;
+        int totalCost = GetValue(item, quantity);
 
         if (!CanTransact(item, quantity))
         {
@@ -50,5 +50,10 @@ public class TradeTransactionHandler : IInventoryTransactionHandler
         // Transfer currency
         _sellerInventory.AddItem(TransactionCurrency, totalCost);
         _buyerInventory.RemoveItem(TransactionCurrency, totalCost);
+    }
+
+    public int GetValue(ItemSO item, int quantity)
+    {
+        return Mathf.CeilToInt(item.Value * quantity * _sellerInventory.InventorySO.ValueModifier);
     }
 }

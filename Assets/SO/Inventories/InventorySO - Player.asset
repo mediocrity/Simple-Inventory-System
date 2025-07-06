@@ -15,3 +15,4 @@ MonoBehaviour:
   _initialItems:
   - Item: {fileID: 11400000, guid: b32d4edc2797f3a4184fc5ea26125f95, type: 2}
     Quantity: 200
+  _valueModifier: 0.5

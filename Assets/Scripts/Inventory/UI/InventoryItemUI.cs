@@ -21,7 +21,7 @@ public class InventoryItemUI : MonoBehaviour
     private int _previousQuantity;
     private RectTransform _rt;
     private Vector3 _defautlSize;
-
+    private const int _tranactionQuantity = 1;
     private const float _animationTransferDelay = 0.25f;
     private const float _animationDuration = 0.7f;
 
@@ -52,7 +52,7 @@ public class InventoryItemUI : MonoBehaviour
 
         // Update transaction related UI elements
         bool canTransact = transactionHandler != null && so.IsTradable;
-        _value.SetText($"{so.Value}");
+        _value.SetText($"{(canTransact ? _transactionHandler.GetValue(so, _tranactionQuantity) : 1)}");
         _value.gameObject.SetActive(canTransact);
         _valueIcon.gameObject.SetActive(canTransact);
         _valueIcon.sprite = canTransact ? _transactionHandler.TransactionCurrency.Icon : null;
@@ -134,6 +134,6 @@ public class InventoryItemUI : MonoBehaviour
 
     public void PressedTransactionButton()
     {
-        _transactionHandler.AttemptToTransact(_itemSO, 1);
+        _transactionHandler.AttemptToTransact(_itemSO, _tranactionQuantity);
     }
 }
