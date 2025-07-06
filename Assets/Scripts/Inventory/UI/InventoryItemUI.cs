@@ -33,22 +33,24 @@ public class InventoryItemUI : MonoBehaviour
         transform.transform.localScale = Vector3.zero;
     }
 
-    public void Initialize(InventoryInstance inventory, IInventoryTrader trader, ItemSO so)
+    public void UpdateUI(InventoryInstance inventory, IInventoryTrader trader, ItemSO so)
     {
         int quantity = inventory.GetQuantity(so);
+
         HandleAnimation(quantity);
 
         _inventory = inventory;
         _trader = trader;
-
         _itemSO = so;
         _previousQuantity = quantity;
 
+        // Update general UI elements
         _icon.sprite = so.Icon;
         _name.SetText(so.DisplayName);
         _description.SetText(so.Description);
         _quantity.SetText($"x{quantity}");
 
+        // Update trading related UI elements
         bool canTrade = trader != null && so.IsTradable;
         _value.SetText($"{so.Value}");
         _value.gameObject.SetActive(canTrade);
@@ -56,7 +58,6 @@ public class InventoryItemUI : MonoBehaviour
         _valueIcon.sprite = canTrade ? _trader.TradeCurrency.Icon : null;
         _tradeButtonText.SetText(canTrade ? trader.TradeText : "?");
         _tradeButton.gameObject.SetActive(canTrade);
-
         _tradeButton.interactable = canTrade ? _trader.CanSellToTrader(_inventory, _itemSO, 1) : false;
     }
 

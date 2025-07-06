@@ -25,26 +25,32 @@ public class InventoryUI : MonoBehaviour
     {
         _inventory = inventory;
         _trader = trader;
-        _inventory.InventoryUpdated += RequiresUpdate;
+        _inventory.InventoryUpdated += TriggerUIUpdate;
         UpdateInventoryUI();
     }
 
-    public void RequiresUpdate()
+    public void TriggerUIUpdate()
     {
         _requiresUpdate = true;
     }
 
     private void Update()
     {
+        // Only update once per frame
         if (_requiresUpdate)
         {
-            // Only update once per frame
             _requiresUpdate = false;
             UpdateInventoryUI();
         }
     }
 
     public void UpdateInventoryUI()
+    {
+        InitializeItemsUI();
+        UpdateUISorting();
+    }
+
+    private void InitializeItemsUI()
     {
         foreach (var item in _inventory.Items)
         {
@@ -58,9 +64,12 @@ public class InventoryUI : MonoBehaviour
                 itemUI = Instantiate(_itemUIPrefab, _itemContainer);
                 _itemUIMap[item] = itemUI;
             }
-            itemUI.Initialize(_inventory, _trader, item);
+            itemUI.UpdateUI(_inventory, _trader, item);
         }
+    }
 
+    private void UpdateUISorting()
+    {
         foreach (var item in _itemUIMap
             .OrderByDescending(pair => pair.Key.SortPriority)
             .ThenByDescending(pair => pair.Key.Value))
