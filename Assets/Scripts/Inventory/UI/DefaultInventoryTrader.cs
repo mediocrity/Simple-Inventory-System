@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class DefaultInventoryTrader : IInventoryTrader
 {
-    private ItemSO _tradingCurrency;
     private InventoryInstance _buyerInventory;
+    public ItemSO TradeCurrency { get; private set; }
+    public string TradeText { get; private set; }
 
-    public DefaultInventoryTrader(ItemSO tradingCurrency, InventoryInstance buyerInventory)
+    public DefaultInventoryTrader(ItemSO tradingCurrency, InventoryInstance buyerInventory, string tradeText)
     {
-        _tradingCurrency = tradingCurrency;
+        TradeCurrency = tradingCurrency;
         _buyerInventory = buyerInventory;
+        TradeText = tradeText;
     }
 
     public void AttemptToSellItem(InventoryInstance sellerInventory, ItemSO item, int quantity)
@@ -21,10 +23,10 @@ public class DefaultInventoryTrader : IInventoryTrader
             Debug.LogWarning($"Not enough {item.DisplayName} in inventory to sell {quantity}.");
             return;
         }
-        bool canAffordItems = _buyerInventory.GetQuantity(_tradingCurrency) >= totalCost;
+        bool canAffordItems = _buyerInventory.GetQuantity(TradeCurrency) >= totalCost;
         if (!canAffordItems)
         {
-            Debug.LogWarning($"Not enough {_tradingCurrency.DisplayName} to buy {quantity} {item.DisplayName}.");
+            Debug.LogWarning($"Not enough {TradeCurrency.DisplayName} to buy {quantity} {item.DisplayName}.");
             return;
         }
 
@@ -33,7 +35,7 @@ public class DefaultInventoryTrader : IInventoryTrader
         _buyerInventory.AddItem(item, quantity);
 
         // Transfer currency
-        sellerInventory.AddItem(_tradingCurrency, totalCost);
-        _buyerInventory.RemoveItem(_tradingCurrency, totalCost);
+        sellerInventory.AddItem(TradeCurrency, totalCost);
+        _buyerInventory.RemoveItem(TradeCurrency, totalCost);
     }
 }

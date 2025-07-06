@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,13 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private TMPro.TMP_Text _name;
     [SerializeField] private TMPro.TMP_Text _description;
+    [SerializeField] private Image _valueIcon = null;
     [SerializeField] private TMPro.TMP_Text _value;
     [SerializeField] private TMPro.TMP_Text _quantity;
-    [SerializeField] private Button _buyButton;
+    [SerializeField] private Button _tradeButton;
+    [SerializeField] private TMP_Text _tradeButtonText;
     [SerializeField] private LayoutElement _layoutElement;
+
     private InventoryInstance _inventory;
     private IInventoryTrader _trader;
     private ItemSO _itemSO;
@@ -43,12 +47,17 @@ public class InventoryItemUI : MonoBehaviour
         _icon.sprite = so.Icon;
         _name.SetText(so.DisplayName);
         _description.SetText(so.Description);
-        _value.SetText($"{so.Value}");
         _quantity.SetText($"x{quantity}");
 
-        _buyButton.gameObject.SetActive(_itemSO.IsTradable);
+        bool canTrade = trader != null && so.IsTradable;
+        _value.SetText($"{so.Value}");
+        _value.gameObject.SetActive(canTrade);
+        _valueIcon.gameObject.SetActive(canTrade);
+        _valueIcon.sprite = canTrade ? _trader.TradeCurrency.Icon : null;
+        _tradeButtonText.SetText(canTrade ? trader.TradeText : "?");
+        _tradeButton.gameObject.SetActive(canTrade);
 
-        _buyButton.interactable = _trader != null;
+        _tradeButton.interactable = canTrade;
     }
 
     private void HandleAnimation(int quantity)
