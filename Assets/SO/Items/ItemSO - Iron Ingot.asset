@@ -15,5 +15,6 @@ MonoBehaviour:
   _displayName: Iron Ingot
   _description: Useful in crafting. Presumably.
   _icon: {fileID: 21300000, guid: d5d7f95582604484a87a97c246803bc7, type: 3}
-  _value: 1
+  _value: 10
   _isTradable: 1
+  _sortPriority: 0
